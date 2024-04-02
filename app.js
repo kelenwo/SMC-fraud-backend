@@ -15,7 +15,7 @@ mongoose.connect(database)
 app.use(express.json());
 
 //Routes
-app.use('/', require('./routes/auth'));
+app.use('/', require('./routes/routes'));
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);

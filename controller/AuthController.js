@@ -1,6 +1,7 @@
 const User = require("../model/User");
 const {notify} = require("../auth/email");
 const bcrypt = require("bcryptjs");
+const {auth} = require("../auth/jwt");
 
 const register = async (req, res) => {
     const result = {};
@@ -49,7 +50,7 @@ const login = async (req, res) => {
             result.message = "Email address is required";
             result.status = 409;
         } else {
-            const user = await User.findOne({ email: form.email });
+            const user = await User.findOne({ email: form.email, role: "ADMIN" });
             if (user) {
                 const subject = "Login to your account"
                 var code = Math.floor(1000 + Math.random() * 9000);
@@ -89,6 +90,10 @@ const authenticate = async (req, res) => {
             const user = await User.findOne({ email: form.email });
             if (user) {
                 if(user.email_code === form.code) {
+                    const token = await auth(user)
+                    console.log(token)
+                    result.access_token = token
+                    result.user = user
                     result.message = "Login successful";
                     result.status = 200;
                 }
