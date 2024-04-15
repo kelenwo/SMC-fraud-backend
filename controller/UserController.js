@@ -68,9 +68,36 @@ const profiles = async (req, res) => {
     res.status(result.status).json(result);
 };
 
+const profile = async (req, res) => {
+    const result = {};
+    console.log("Here")
+
+    const form = req?.body ?? null;
+    if (!form?.uid) {
+        result.message = "Email address is required";
+        result.status = 409;
+    }
+    else {
+
+        try {
+            const user = await User.findOne({ _id: form.uid });
+            result.status = 200
+            result.profile = user
+
+        } catch (error) {
+            console.error(error);
+            result.message = error.message;
+            result.status = 500;
+        }
+    }
+    console.log(result);
+    res.status(result.status).json(result);
+};
+
 
 module.exports =  {
     newProfile,
     profiles,
+    profile,
 
 };

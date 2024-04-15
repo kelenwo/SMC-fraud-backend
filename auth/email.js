@@ -6,7 +6,7 @@ const notify = (email, subject, body) => {
         port: 587,
         auth: {
             user: "kelenwo68@gmail.com",
-            pass: "kairklrrurehruzv",
+            pass: "uhbipavyrsudgdme",
         },
     });
 
