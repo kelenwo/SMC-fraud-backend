@@ -54,6 +54,8 @@ const login = async (req, res) => {
             if (user) {
                 const subject = "Login to your account"
                 var code = Math.floor(1000 + Math.random() * 9000);
+
+                console.log(code)
                 const body = `Use the OTP below to login to your account <h1>${code}</h1>`
 
                 await user.set("email_code", code).save()
